@@ -8,7 +8,7 @@ body:
       value: |
         You do not need to prove that something is wrong or propose a rewrite. Knowing where the explanation becomes difficult to follow is useful feedback.
 
-        This report will be public. Please use our usual private course channels instead of this form for any matter other than feedback on the books.
+        This report will be public. Use our usual private course channels instead of this form for any matter other than feedback on the books.
   - type: dropdown
     id: book
     attributes:
