@@ -6,9 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping improve the books. A short report is enough; you do not need to know the correction, and it is fine to be unsure.
-
-        This report will be public. Use your usual private course channel for assignment submissions, grading questions, or personal information.
+        Thank you for helping improve the books. A short report is enough; you do not need to know the correction.
+        
+        This report will be public. Please use our usual private course channels instead of this form for any matter other than feedback on the books.      
   - type: dropdown
     id: book
     attributes:
@@ -24,7 +24,7 @@ body:
     id: location
     attributes:
       label: Location
-      description: Give a chapter, section, theorem, exercise, or page number. For a website problem, identify the link or section.
+      description: Give a chapter, section, theorem, exercise, or page number. 
       placeholder: "Example: Merge Sort chapter, proof of correctness of Merge, second paragraph"
     validations:
       required: true
