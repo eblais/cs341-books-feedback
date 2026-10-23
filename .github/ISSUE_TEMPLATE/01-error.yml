@@ -8,7 +8,7 @@ body:
       value: |
         Thank you for helping improve the books. A short report is enough; you do not need to know the correction.
         
-        This report will be public. Please use our usual private course channels instead of this form for any matter other than feedback on the books.      
+        This report will be public. Use our usual private course channels instead of this form for any matter other than feedback on the books.      
   - type: dropdown
     id: book
     attributes:
