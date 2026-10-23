@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read the Reference Notes and Workbook
+    url: https://eblais.github.io/cs341-books/
+    about: Download the current public PDFs of both books.
