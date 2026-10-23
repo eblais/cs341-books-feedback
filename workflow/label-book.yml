@@ -1,0 +1,89 @@
+name: Label issues by book
+
+"on":
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  issues: write
+
+concurrency:
+  group: book-labels-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  label-book:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Match book labels to the submitted Book field
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          from urllib.error import HTTPError
+          from urllib.parse import quote
+          from urllib.request import Request, urlopen
+
+          # Read issue content as data, never as part of a shell command.
+          with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as source:
+              event = json.load(source)
+          number = int(event["issue"]["number"])
+          repository = os.environ["GITHUB_REPOSITORY"]
+          api_root = os.environ["GITHUB_API_URL"].rstrip("/")
+          issue_path = f"/repos/{repository}/issues/{number}"
+
+          def api(method, path, payload=None):
+              data = None if payload is None else json.dumps(payload).encode("utf-8")
+              request = Request(
+                  api_root + path,
+                  data=data,
+                  method=method,
+                  headers={
+                      "Authorization": "Bearer " + os.environ["GH_TOKEN"],
+                      "Accept": "application/vnd.github+json",
+                      "Content-Type": "application/json",
+                      "X-GitHub-Api-Version": "2026-03-10",
+                      "User-Agent": "cs341-books-feedback",
+                  },
+              )
+              with urlopen(request, timeout=30) as response:
+                  content = response.read()
+              return json.loads(content) if content else None
+
+          # Fetch the current issue so a queued run does not use an old selection.
+          issue = api("GET", issue_path)
+          body = (issue.get("body") or "").replace("\r\n", "\n")
+          field = re.search(
+              r"^### Book[ \t]*\n(.*?)(?=^### |\Z)",
+              body,
+              flags=re.MULTILINE | re.DOTALL,
+          )
+          choice = field.group(1).strip() if field else None
+          mapping = {
+              "Reference Notes": {"reference-notes"},
+              "Workbook": {"workbook"},
+              "Both books": {"reference-notes", "workbook"},
+          }
+          if choice not in mapping:
+              print("No recognized Book field; leaving labels unchanged.")
+              raise SystemExit(0)
+
+          desired = mapping[choice]
+          current = {label["name"] for label in issue["labels"]}
+          managed = {"reference-notes", "workbook"}
+          missing = sorted(desired - current)
+          if missing:
+              api("POST", issue_path + "/labels", {"labels": missing})
+          for label in sorted((current & managed) - desired):
+              try:
+                  api("DELETE", issue_path + "/labels/" + quote(label, safe=""))
+              except HTTPError as error:
+                  if error.code != 404:
+                      raise
+          print(f"Book labels synchronized for issue #{number}.")
+          PY
