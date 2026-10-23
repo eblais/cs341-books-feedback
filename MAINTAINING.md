@@ -1,8 +1,8 @@
 # Maintainer workflow
 
 The public issue is the shared record of reader feedback. Book edits and review
-take place in the private source repository. This feedback repository needs no
-build workflow or GitHub Pages deployment.
+take place in the private source repository. The `Label issues by book` workflow
+maintains book labels automatically; no book build or Pages deployment runs here.
 
 ## Labels
 
@@ -20,17 +20,35 @@ does not create them automatically.
 | `workbook` | `0E8A16` | Concerns the Workbook |
 | `awaiting-publication` | `F9D0C4` | Changed in the source; public PDF still needs updating |
 
-The forms apply `needs-triage` and one category label. Add `reference-notes`,
-`workbook`, or both during triage. The Book dropdown does not automatically add
-book labels. For website-only feedback, neither book label is necessary.
+The forms apply `needs-triage` and one category label immediately. Once the
+`Label issues by book` workflow finishes, it adds the book labels as follows:
+
+| Book selection | Book labels |
+| --- | --- |
+| Reference Notes | `reference-notes` |
+| Workbook | `workbook` |
+| Both books | `reference-notes`, `workbook` |
+
+The workflow runs when an issue is opened, edited, or reopened. It reads the
+`### Book` section of the submitted issue body and synchronizes only the two
+book labels. Other labels are preserved. If the section is missing or its value
+is unrecognized, the workflow leaves all labels unchanged.
+
+To correct a book selection after submission, edit the issue body and change
+the text below `### Book` to one of the three choices above. Manually changing a
+book label alone can be undone by a later edit or reopening. If you rename the
+form's Book heading, dropdown options, or book labels, update the workflow too.
+
+Existing issues are not automatically processed when the workflow is installed.
+Edit their issue body and save a change, or reopen them, to trigger it.
 
 ## Reviewing reports
 
 During a teaching term, aim to review new reports weekly. Agree which instructor
 is checking the queue; assign each accepted item to the person handling it.
 
-1. Read the report, check the passage, and acknowledge the feedback. Add the book
-   label and correct the category if needed.
+1. Read the report, check the passage, and acknowledge the feedback. Check the
+   automatically applied book labels and correct the category if needed.
 2. Ask for more detail if necessary. Remove `needs-triage` once an initial review
    and next step have been recorded. Use the issue comments for decisions.
 3. Keep accepted work open and assign an instructor. Leave longer-term suggestions
