@@ -1,0 +1,51 @@
+name: Report an error
+description: Report a typo, incorrect equation, broken reference, or mistake in an algorithm or proof.
+title: "[Error]: "
+labels: ["error", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve the books. A short report is enough; you do not need to know the correction, and it is fine to be unsure.
+
+        This report will be public. Use your usual private course channel for assignment submissions, grading questions, or personal information.
+  - type: dropdown
+    id: book
+    attributes:
+      label: Book
+      options:
+        - Reference Notes
+        - Workbook
+        - Both books
+        - Download webpage
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: Give a chapter, section, theorem, exercise, or page number. For a website problem, identify the link or section.
+      placeholder: "Example: Merge Sort chapter, proof of correctness of Merge, second paragraph"
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: What seems incorrect?
+      description: Describe the issue and, if helpful, quote a short passage or attach a screenshot.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Suggested correction (optional)
+      description: Leave this blank if you are unsure how to correct it.
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: PDF version or date (optional)
+      description: Give the date or version printed in the PDF, or when you downloaded it. Leave blank if unknown or not applicable.
+    validations:
+      required: false

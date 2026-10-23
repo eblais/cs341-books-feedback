@@ -1,0 +1,51 @@
+name: Flag an unclear explanation
+description: Identify a passage, notation, proof step, or problem statement that is difficult to understand.
+title: "[Clarity]: "
+labels: ["clarity", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        You do not need to prove that something is wrong or propose a rewrite. Knowing where the explanation becomes difficult to follow is useful feedback.
+
+        This report will be public. Use your usual private course channel for assignment submissions, grading questions, or personal information.
+  - type: dropdown
+    id: book
+    attributes:
+      label: Book
+      options:
+        - Reference Notes
+        - Workbook
+        - Both books
+        - Download webpage
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: Give a chapter, section, theorem, exercise, or page number. Write "whole book" for a recurring concern.
+      placeholder: "Example: Selection chapter, explanation of the pivot choice"
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: Where does the explanation become unclear?
+      description: Identify the step, notation, or statement you could not follow. A short quotation or screenshot can help.
+    validations:
+      required: true
+  - type: textarea
+    id: improvement
+    attributes:
+      label: What might help? (optional)
+      description: For example, an extra justification, definition, diagram, or worked example. It is fine to leave this blank.
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: PDF version or date (optional)
+      description: Give the date or version printed in the PDF, or when you downloaded it. Leave blank if unknown or not applicable.
+    validations:
+      required: false

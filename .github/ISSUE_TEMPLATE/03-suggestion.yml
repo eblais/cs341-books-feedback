@@ -1,0 +1,51 @@
+name: Suggest an improvement
+description: Suggest a new example or exercise, a change to the organization, or another local or global improvement.
+title: "[Suggestion]: "
+labels: ["suggestion", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Suggestions of any size are welcome, including changes to coverage, organization, examples, notation, and the relationship between the books. An initial idea is enough; a complete plan is not required.
+
+        This report will be public. Use your usual private course channel for assignment submissions, grading questions, or personal information.
+  - type: dropdown
+    id: book
+    attributes:
+      label: Book
+      options:
+        - Reference Notes
+        - Workbook
+        - Both books
+        - Download webpage
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Location or scope
+      description: Identify a passage, chapter, topic, or relationship between the books. Write "whole book" for a global suggestion.
+      placeholder: "Example: Whole book — order of the algorithm design topics"
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you suggest, and how would it help?
+      description: Describe the change or the need it would address. A brief, tentative suggestion is welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples or possible implementation (optional)
+      description: Include sample wording, an exercise idea, or other details if you have them.
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: PDF version or date (optional)
+      description: Include this if your suggestion depends on a particular version. Otherwise, leave it blank.
+    validations:
+      required: false
