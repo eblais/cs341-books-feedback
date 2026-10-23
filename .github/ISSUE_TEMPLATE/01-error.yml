@@ -17,7 +17,6 @@ body:
         - Reference Notes
         - Workbook
         - Both books
-        - Download webpage
     validations:
       required: true
   - type: input
